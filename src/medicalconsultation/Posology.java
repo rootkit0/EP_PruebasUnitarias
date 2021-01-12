@@ -14,9 +14,11 @@ public class Posology {
     public float getDose() {
         return dose;
     }
+
     public float getFreq() {
         return freq;
     }
+
     public FqUnit getFreqUnit() {
         return freqUnit;
     }
@@ -31,5 +33,13 @@ public class Posology {
 
     public void setFreqUnit(FqUnit freqUnit) {
         this.freqUnit = freqUnit;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Posology p = (Posology) o;
+        return this.dose == p.dose && this.freq == p.freq && this.freqUnit == p.freqUnit;
     }
 }

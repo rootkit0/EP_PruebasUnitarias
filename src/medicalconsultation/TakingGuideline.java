@@ -1,21 +1,19 @@
 package medicalconsultation;
 
 public class TakingGuideline {
-    private float dayMoment;
+    private DayMoment dayMoment;
     private float duration;
     private String instructions;
     private Posology posology;
 
-    public TakingGuideline(float dM, float du, String i, float d, float f, FqUnit u) {
+    public TakingGuideline(DayMoment dM, float du, String i, float d, float f, FqUnit u) {
         this.dayMoment = dM;
         this.duration = du;
         this.instructions = i;
-        this.posology.setDose(d);
-        this.posology.setFreq(f);
-        this.posology.setFreqUnit(u);
+        this.posology = new Posology(d, f, u);
     }
 
-    public float getDayMoment() {
+    public DayMoment getDayMoment() {
         return dayMoment;
     }
 
@@ -31,7 +29,7 @@ public class TakingGuideline {
         return posology;
     }
 
-    public void setDayMoment(float dayMoment) {
+    public void setDayMoment(DayMoment dayMoment) {
         this.dayMoment = dayMoment;
     }
 
@@ -45,5 +43,13 @@ public class TakingGuideline {
 
     public void setPosology(Posology posology) {
         this.posology = posology;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TakingGuideline tg = (TakingGuideline) o;
+        return this.dayMoment == tg.dayMoment && this.duration == tg.duration && this.instructions == tg.instructions && this.posology == tg.posology;
     }
 }
