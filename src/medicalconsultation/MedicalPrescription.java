@@ -7,6 +7,7 @@ import exceptions.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 public class MedicalPrescription {
     private int prescCode;
@@ -46,11 +47,43 @@ public class MedicalPrescription {
     }
 
     public void modifyLine(ProductID prodID, String[] instruc) throws ProductNotInPrescription, IncorrectTakingGuidelinesException {
-
+        MedicalPrescriptionLine prescLine = getPrescriptionLine(prodID);
+        TakingGuideline tg = prescLine.getTakingGuideline();
+        if(!instruc[0].isEmpty()) {
+            tg.setDayMoment(DayMoment.getDayMoment(instruc[0]));
+        }
+        if(!instruc[1].isEmpty()) {
+            tg.setDuration(Float.parseFloat(instruc[1]));
+        }
+        if(!instruc[2].isEmpty()) {
+            tg.setInstructions(instruc[2]);
+        }
+        if(!instruc[3].isEmpty()) {
+            tg.getPosology().setDose(Float.parseFloat(instruc[3]));
+        }
+        if(!instruc[4].isEmpty()) {
+            tg.getPosology().setFreq(Float.parseFloat(instruc[4]));
+        }
+        if(!instruc[5].isEmpty()) {
+            tg.getPosology().setFreqUnit(FqUnit.getFqUnit(instruc[5]));
+        }
+        prescLine.setTakingGuideline(tg);
     }
 
     public void removeLine(ProductID prodID) throws ProductNotInPrescription {
+        MedicalPrescriptionLine prescLine = getPrescriptionLine(prodID);
+        prescLines.remove(prescLine);
+    }
 
+    public MedicalPrescriptionLine getPrescriptionLine(ProductID prodID) {
+        Iterator<MedicalPrescriptionLine> iter = prescLines.iterator();
+        while(iter.hasNext()) {
+            MedicalPrescriptionLine tmp = iter.next();
+            if(tmp.getProductID().equals(prodID)) {
+                return tmp;
+            }
+        }
+        return null;
     }
 
     public int getPrescCode() {
