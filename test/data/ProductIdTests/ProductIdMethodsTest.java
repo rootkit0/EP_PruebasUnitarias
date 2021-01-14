@@ -47,7 +47,7 @@ public class ProductIdMethodsTest {
     }
 
     @Test
-    public void toStringTest() throws Exception {
+    public void toStringTest() {
         String code = "ProductID{" + "product code='" + upcCode + '\'' + '}';
         String code2 = "ProductID{" + "product code='" + upcCode2 + '\'' + '}';
         assertEquals(prodID.toString(), code);

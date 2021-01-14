@@ -1,8 +1,6 @@
 package data.HealthCardIdTests;
 
 import data.HealthCardID;
-import exceptions.NullObjectException;
-import exceptions.WrongIdCodeFormat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -49,7 +47,7 @@ public class HealthCardIdMethodsTest {
     }
 
     @Test
-    public void toStringTest() throws Exception {
+    public void toStringTest() {
         String code = "HealthCardID{" + "personal code='" + personalID + '\'' + '}';
         String code2 = "HealthCardID{" + "personal code='" + personalID2 + '\'' + '}';
         assertEquals(hCardID.toString(), code);
