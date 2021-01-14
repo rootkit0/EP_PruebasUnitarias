@@ -10,10 +10,13 @@ final public class HealthCardID {
         if(code == null) {
             throw new NullObjectException("HealthCardID is null");
         }
-        if(!checkHealthCardID(code)) {
+        if(checkHealthCardID(code)) {
+            this.personalID = code;
+        }
+        else {
             throw new WrongIdCodeFormat("HealthCardID has wrong format");
         }
-        this.personalID = code;
+
     }
 
     public String getPersonalID() {

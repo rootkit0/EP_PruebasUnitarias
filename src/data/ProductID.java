@@ -10,10 +10,12 @@ final public class ProductID {
         if(code == null) {
             throw new NullObjectException("ProductID is null");
         }
-        if(!checkProductID(code)) {
+        if(checkProductID(code)) {
+            this.upcCode = code;
+        }
+        else {
             throw new WrongIdCodeFormat("ProductID has wrong format");
         }
-        this.upcCode = code;
     }
 
     public String getUpcCode() {
