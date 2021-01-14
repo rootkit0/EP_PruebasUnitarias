@@ -1,9 +1,14 @@
 package data;
 
+import exceptions.NullObjectException;
+
 final public class DigitalSignature {
     private final byte[] doctorSign;
 
-    public DigitalSignature(byte[] sign) {
+    public DigitalSignature(byte[] sign) throws NullObjectException {
+        if(sign == null) {
+            throw new NullObjectException("Doctor signature is null");
+        }
         this.doctorSign = sign;
     }
 

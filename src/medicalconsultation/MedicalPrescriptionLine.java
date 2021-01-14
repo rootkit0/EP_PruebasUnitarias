@@ -2,6 +2,8 @@ package medicalconsultation;
 
 import data.ProductID;
 
+import java.util.Objects;
+
 public class MedicalPrescriptionLine {
     private ProductID prodID;
     private TakingGuideline tg;
@@ -25,6 +27,11 @@ public class MedicalPrescriptionLine {
 
     public void setTakingGuideline(TakingGuideline tg) {
         this.tg = tg;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(prodID, tg);
     }
 
     @Override

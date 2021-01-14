@@ -1,7 +1,7 @@
 package exceptions;
 
 public class AnyMedicineSearchException extends Exception {
-    public AnyMedicineSearchException() {
-        super();
+    public AnyMedicineSearchException(String msg) {
+        super(msg);
     }
 }

@@ -1,7 +1,7 @@
 package exceptions;
 
 public class HealthCardException extends Exception {
-    public HealthCardException() {
-        super();
+    public HealthCardException(String msg) {
+        super(msg);
     }
 }

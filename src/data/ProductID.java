@@ -1,9 +1,18 @@
 package data;
 
+import exceptions.NullObjectException;
+import exceptions.WrongIdCodeFormat;
+
 final public class ProductID {
     private final String upcCode;
 
-    public ProductID(String code) {
+    public ProductID(String code) throws NullObjectException, WrongIdCodeFormat {
+        if(code == null) {
+            throw new NullObjectException("ProductID is null");
+        }
+        if(!checkProductID(code)) {
+            throw new WrongIdCodeFormat("ProductID has wrong format");
+        }
         this.upcCode = code;
     }
 

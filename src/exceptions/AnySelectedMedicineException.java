@@ -1,7 +1,7 @@
 package exceptions;
 
 public class AnySelectedMedicineException extends Exception {
-    public AnySelectedMedicineException() {
-        super();
+    public AnySelectedMedicineException(String msg) {
+        super(msg);
     }
 }

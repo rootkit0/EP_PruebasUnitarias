@@ -1,7 +1,7 @@
 package exceptions;
 
 public class ConnectException extends Exception {
-    public ConnectException() {
-        super();
+    public ConnectException(String msg) {
+        super(msg);
     }
 }

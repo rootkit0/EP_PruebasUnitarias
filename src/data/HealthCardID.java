@@ -1,9 +1,18 @@
 package data;
 
+import exceptions.NullObjectException;
+import exceptions.WrongIdCodeFormat;
+
 final public class HealthCardID {
     private final String personalID;
 
-    public HealthCardID(String code) {
+    public HealthCardID(String code) throws NullObjectException, WrongIdCodeFormat {
+        if(code == null) {
+            throw new NullObjectException("HealthCardID is null");
+        }
+        if(!checkHealthCardID(code)) {
+            throw new WrongIdCodeFormat("HealthCardID has wrong format");
+        }
         this.personalID = code;
     }
 

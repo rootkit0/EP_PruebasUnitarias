@@ -1,7 +1,7 @@
 package exceptions;
 
 public class ProductNotInPrescription extends Exception {
-    public ProductNotInPrescription() {
-        super();
+    public ProductNotInPrescription(String msg) {
+        super(msg);
     }
 }
