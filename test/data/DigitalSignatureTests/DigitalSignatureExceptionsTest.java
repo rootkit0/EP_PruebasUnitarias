@@ -15,15 +15,13 @@ public class DigitalSignatureExceptionsTest {
 
     @Test
     public void formatErrorExceptionTest() {
-        String name = "Xavier";
-        byte[] bArray = name.getBytes();
+        byte[] bArray = "Xavier".getBytes();
         assertDoesNotThrow(() -> new DigitalSignature(bArray));
     }
 
     @Test
     public void nullEqualsExceptionTest() throws Exception {
-        String name = "Xavier";
-        byte[] bArray = name.getBytes();
+        byte[] bArray = "Xavier".getBytes();
         assertNotEquals(null, new DigitalSignature(bArray));
     }
 }
