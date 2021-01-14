@@ -16,7 +16,6 @@ final public class HealthCardID {
         else {
             throw new WrongIdCodeFormat("HealthCardID has wrong format");
         }
-
     }
 
     public String getPersonalID() {

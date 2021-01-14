@@ -10,19 +10,19 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ProductIdExceptionsTest {
 
     @Test
-    public void nullConstructorParameterTest() {
+    public void nullConstructorExceptionTest() {
         assertThrows(NullObjectException.class, () -> new ProductID(null));
     }
 
     @Test
-    public void wrongFormatParameterTest() {
+    public void formatErrorExceptionTest() {
         assertThrows(WrongIdCodeFormat.class, () -> new ProductID("0123456789AB"));
         assertThrows(WrongIdCodeFormat.class, () -> new ProductID("AB2345678901"));
         assertDoesNotThrow(() -> new ProductID("012345678901"));
     }
 
     @Test
-    public void nullEqualsParameterTest() throws NullObjectException, WrongIdCodeFormat {
+    public void nullEqualsExceptionTest() throws Exception {
         assertNotEquals(null, new ProductID("012345678901"));
     }
 }
