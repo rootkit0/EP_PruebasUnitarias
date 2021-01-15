@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 public interface MedicalConsultationMethodsTest {
 
     @Test
-    void equalsTest();
+    void equalsTest() throws Exception;
 
     @Test
-    void notEqualsTest();
+    void notEqualsTest() throws Exception;
 
     @Test
     void gettersTest();

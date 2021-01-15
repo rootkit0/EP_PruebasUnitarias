@@ -50,21 +50,35 @@ public class ProductSpecificationTest implements MedicalConsultationMethodsTest 
 
     //Interface classes
     @Override
+    @Test
     public void equalsTest() {
-
+        ProductSpecification productSpecification2 = new ProductSpecification(prodID, "Ibuprofeno 600mg, comprimidos recubiertos", new BigDecimal("0.5"));
+        assertEquals(productSpecification, productSpecification2);
     }
 
     @Override
-    public void notEqualsTest() {
-
+    @Test
+    public void notEqualsTest() throws Exception {
+        ProductID prodID2 = new ProductID("000000000000");
+        //Not equal ProductID
+        ProductSpecification productSpecification2 = new ProductSpecification(prodID2, "Ibuprofeno 600mg, comprimidos recubiertos", new BigDecimal("0.5"));
+        assertNotEquals(productSpecification, productSpecification2);
+        //Not equal Description
+        productSpecification2 = new ProductSpecification(prodID, "Trankimazin 2mg, comprimidos", new BigDecimal("0.5"));
+        assertNotEquals(productSpecification, productSpecification2);
+        //Not equal BigDecimal
+        productSpecification2 = new ProductSpecification(prodID, "Ibuprofeno 600mg, comprimidos recubiertos", new BigDecimal("1"));
+        assertNotEquals(productSpecification, productSpecification2);
     }
 
     @Override
+    @Test
     public void gettersTest() {
 
     }
 
     @Override
+    @Test
     public void settersTest() {
 
     }
