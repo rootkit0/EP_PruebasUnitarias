@@ -1,18 +1,16 @@
 package medicalconsultation.MedicalPrescriptionTests;
 
+import exceptions.NullObjectException;
+import exceptions.WrongIdCodeFormat;
 import org.junit.jupiter.api.Test;
 
 public interface MedicalConsultationMethodsTest {
 
-    @Test
-    void equalsTest() throws Exception;
+    //Getters and setters are in separeted methods on each test class
 
     @Test
-    void notEqualsTest() throws Exception;
+    void equalsTest() throws NullObjectException, WrongIdCodeFormat;
 
     @Test
-    void gettersTest();
-
-    @Test
-    void settersTest();
+    void notEqualsTest() throws NullObjectException, WrongIdCodeFormat;
 }

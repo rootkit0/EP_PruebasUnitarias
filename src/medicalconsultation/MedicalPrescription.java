@@ -42,6 +42,13 @@ public class MedicalPrescription {
             instruc[3].isEmpty() || instruc[4].isEmpty() || instruc[5].isEmpty()) {
             throw new IncorrectTakingGuidelinesException("Incomplete information or incorrect format of the instruc");
         }
+        //Check that information is correct
+        if(DayMoment.getDayMoment(instruc[0]) == null) {
+            throw new IncorrectTakingGuidelinesException("Incorrect DayMoment value");
+        }
+        if(FqUnit.getFqUnit(instruc[5]) == null) {
+            throw new IncorrectTakingGuidelinesException("Incorrect FqUnit value");
+        }
         try {
             TakingGuideline tg = new TakingGuideline(
                     DayMoment.getDayMoment(instruc[0]),

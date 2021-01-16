@@ -13,6 +13,13 @@ public class TakingGuideline {
         this.posology = new Posology(d, f, u);
     }
 
+    public TakingGuideline(DayMoment dM, float du, String i, Posology p) {
+        this.dayMoment = dM;
+        this.duration = du;
+        this.instructions = i;
+        this.posology = p;
+    }
+
     public DayMoment getDayMoment() {
         return dayMoment;
     }
