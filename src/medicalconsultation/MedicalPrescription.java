@@ -64,15 +64,8 @@ public class MedicalPrescription {
     }
 
     public void modifyLine(ProductID prodID, String[] instruc) throws ProductNotInPrescription, IncorrectTakingGuidelinesException {
-        //Check if product is in prescLines
-        boolean found = false;
-        for(int i=0; i<prescLines.size(); ++i) {
-            if(prescLines.get(i).getProductID() == prodID) {
-                found = true;
-            }
-        }
-        if(!found) {
-            throw new ProductNotInPrescription("Couldn't find the product on the prescription lines");
+        if(instruc.length != 6) {
+            throw new IncorrectTakingGuidelinesException("Incorrect number of parameters on instruc");
         }
         MedicalPrescriptionLine prescLine = getPrescriptionLine(prodID);
         TakingGuideline tg = prescLine.getTakingGuideline();
@@ -103,16 +96,6 @@ public class MedicalPrescription {
     }
 
     public void removeLine(ProductID prodID) throws ProductNotInPrescription {
-        //Check if product is in prescLines
-        boolean found = false;
-        for(int i=0; i<prescLines.size(); ++i) {
-            if(prescLines.get(i).getProductID() == prodID) {
-                found = true;
-            }
-        }
-        if(!found) {
-            throw new ProductNotInPrescription("Couldn't find the product on the prescription lines");
-        }
         MedicalPrescriptionLine prescLine = getPrescriptionLine(prodID);
         prescLines.remove(prescLine);
     }
