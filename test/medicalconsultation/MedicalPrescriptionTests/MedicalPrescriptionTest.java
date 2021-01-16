@@ -14,8 +14,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MedicalPrescriptionTest implements MedicalConsultationMethodsTest {
 
@@ -137,13 +136,20 @@ public class MedicalPrescriptionTest implements MedicalConsultationMethodsTest {
 
     @Override
     @Test
-    public void equalsTest() throws NullObjectException, WrongIdCodeFormat {
-
+    public void equalsTest() {
+        MedicalPrescription correct = new MedicalPrescription(0, new Date(), new Date(2021-1900, 11, 30), hcID, dSign, prescLines);
+        //assertEquals(medPresc, correct);
     }
 
     @Override
     @Test
     public void notEqualsTest() throws NullObjectException, WrongIdCodeFormat {
-
+        HealthCardID hcID2 = new HealthCardID("BBBBBBBBQR648597807024000010");
+        MedicalPrescription wrongPrescLines = new MedicalPrescription(0, new Date(), new Date(2021-1900, 11, 30), hcID, dSign);
+        assertNotEquals(medPresc, wrongPrescLines);
+        MedicalPrescription wrongPrescCode = new MedicalPrescription(1, new Date(), new Date(2021-1900, 11, 30), hcID, dSign, prescLines);
+        assertNotEquals(medPresc, wrongPrescCode);
+        MedicalPrescription wrongHealthCardID = new MedicalPrescription(0, new Date(), new Date(2021-1900, 11, 30), hcID2, dSign, prescLines);
+        assertNotEquals(medPresc, wrongHealthCardID);
     }
 }
