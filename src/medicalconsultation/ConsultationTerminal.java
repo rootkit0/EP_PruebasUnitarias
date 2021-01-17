@@ -5,7 +5,9 @@ import data.HealthCardID;
 import data.ProductID;
 import exceptions.*;
 import services.HealthNationalService;
+import services.HealthNationalServiceSample;
 import services.ScheduledVisitAgenda;
+import services.ScheduledVisitAgendaSample;
 
 import java.util.Date;
 import java.util.List;
@@ -23,6 +25,13 @@ public class ConsultationTerminal {
     public ConsultationTerminal(HealthNationalService HNS, ScheduledVisitAgenda SVA, DigitalSignature dSign) {
         this.HNS = HNS;
         this.SVA = SVA;
+        this.dSign = dSign;
+    }
+
+    //For testing
+    public ConsultationTerminal(DigitalSignature dSign) {
+        this.HNS = new HealthNationalServiceSample();
+        this.SVA = new ScheduledVisitAgendaSample();
         this.dSign = dSign;
     }
 
@@ -106,5 +115,38 @@ public class ConsultationTerminal {
             throw new PrintingException("Null object, expected an ePrescription");
         }
         System.out.println(ePrescription.toString());
+    }
+
+    //Getters and setters
+    public HealthNationalService getHNS() {
+        return HNS;
+    }
+
+    public ScheduledVisitAgenda getSVA() {
+        return SVA;
+    }
+
+    public HealthCardID getHcID() {
+        return hcID;
+    }
+
+    public MedicalPrescription getePrescription() {
+        return ePrescription;
+    }
+
+    public void setHNS(HealthNationalService HNS) {
+        this.HNS = HNS;
+    }
+
+    public void setSVA(ScheduledVisitAgenda SVA) {
+        this.SVA = SVA;
+    }
+
+    public void setHcID(HealthCardID hcID) {
+        this.hcID = hcID;
+    }
+
+    public void setePrescription(MedicalPrescription ePrescription) {
+        this.ePrescription = ePrescription;
     }
 }

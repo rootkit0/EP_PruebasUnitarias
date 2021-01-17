@@ -43,7 +43,7 @@ public class MedicalPrescriptionTest implements MedicalConsultationMethodsTest {
         prescLines = new ArrayList<MedicalPrescriptionLine>();
         prescLines.add(mpl);
         prescLines.add(mpl2);
-        medPresc = new MedicalPrescription(0, new Date(), new Date(2021-1900, 11, 30), hcID, dSign, prescLines);
+        medPresc = new MedicalPrescription(1234, new Date(), new Date(2021-1900, 10, 25), hcID, dSign, prescLines);
     }
 
     @Test

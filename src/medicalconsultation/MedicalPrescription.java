@@ -64,8 +64,16 @@ public class MedicalPrescription {
     }
 
     public void modifyLine(ProductID prodID, String[] instruc) throws ProductNotInPrescription, IncorrectTakingGuidelinesException {
+        //Check that information is complete
         if(instruc.length != 6) {
             throw new IncorrectTakingGuidelinesException("Incorrect number of parameters on instruc");
+        }
+        //Check that information is correct
+        if(DayMoment.getDayMoment(instruc[0]) == null) {
+            throw new IncorrectTakingGuidelinesException("Incorrect DayMoment value");
+        }
+        if(FqUnit.getFqUnit(instruc[5]) == null) {
+            throw new IncorrectTakingGuidelinesException("Incorrect FqUnit value");
         }
         MedicalPrescriptionLine prescLine = getPrescriptionLine(prodID);
         TakingGuideline tg = prescLine.getTakingGuideline();
