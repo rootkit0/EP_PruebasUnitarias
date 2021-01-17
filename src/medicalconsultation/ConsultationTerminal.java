@@ -29,7 +29,7 @@ public class ConsultationTerminal {
     }
 
     //For testing
-    public ConsultationTerminal(DigitalSignature dSign) {
+    public ConsultationTerminal(DigitalSignature dSign) throws Exception {
         this.HNS = new HealthNationalServiceSample();
         this.SVA = new ScheduledVisitAgendaSample();
         this.dSign = dSign;

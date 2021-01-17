@@ -176,4 +176,9 @@ public class MedicalPrescription {
                 this.endDate.equals(mp.endDate) && this.hcID.equals(mp.hcID) &&
                 this.eSign.equals(mp.eSign) && this.prescLines.equals(mp.prescLines);
     }
+
+    //For testing
+    public ArrayList<MedicalPrescriptionLine> getLines() {
+        return prescLines;
+    }
 }

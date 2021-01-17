@@ -37,7 +37,7 @@ public class ConsultationTerminalTest {
     }
 
     @BeforeEach
-    static void initTest() throws NullObjectException {
+    static void initTest() throws Exception {
         ct = new ConsultationTerminal(new DigitalSignature("Xavier".getBytes()));
         ct.setHNS(hns);
         ct.setSVA(sva);
@@ -69,7 +69,7 @@ public class ConsultationTerminalTest {
 
             spec1 = new ProductSpecification(item1, "AntiInflamatorio 500gr", new BigDecimal("1.5"));
             spec2 = new ProductSpecification(item2, "Analgesico 1gr", new BigDecimal("3"));
-            spec3 = new ProductSpecification(item3, "Antipireticos 1.5gr", new BigDecimal("4.5"));
+            spec3 = new ProductSpecification(item3, "Antipiretico 1.5gr", new BigDecimal("4.5"));
 
             return new ArrayList<>(Arrays.asList(spec1, spec2, spec3));
         }
