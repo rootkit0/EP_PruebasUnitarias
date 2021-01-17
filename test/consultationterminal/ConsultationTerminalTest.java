@@ -28,13 +28,13 @@ public class ConsultationTerminalTest {
 
     @BeforeAll
     static void initContent() throws Exception {
-        ct = new ConsultationTerminal(new DigitalSignature("Xavier".getBytes()));
+        dSign = new DigitalSignature("Xavier".getBytes());
+        ct = new ConsultationTerminal(dSign);
         hns = new HealthNationalServiceDoble();
         hnsNull = new HealthNationalServiceDobleNull();
         sva = new ScheduledVisitAgendaDoble();
         svaNull = new ScheduledVisitAgendaDobleNull();
         hcID = new HealthCardID("BBBBBBBBQR648597807024000012");
-        dSign = new DigitalSignature("Xavier".getBytes());
 
         //Create medicalprescriptionlines
         TakingGuideline tg1 = new TakingGuideline(DayMoment.AFTERBREAKFAST, 10, "instructions1", 20, 30, FqUnit.HOUR);
@@ -76,32 +76,79 @@ public class ConsultationTerminalTest {
 
     @Test
     void initPrescriptionEditionTest() throws Exception {
-
+        initContent();
+        ct.initRevision();
+        assertDoesNotThrow(() -> {ct.initPrescriptionEdition();});
     }
 
     @Test
     void searchForProductsTest() throws Exception {
-
+        ct.initRevision();
+        ct.searchForProducts("");
+        //assertEquals(hns.getProductsByKW(""), ct.getProductsSpecs());
     }
 
     @Test
     void selectProductTest() throws Exception {
-
+        ct.initRevision();
+        ct.searchForProducts("Analgesico");
+        ct.selectProduct(1);
+        assertEquals(new ProductID("234567890123"), ct.getProdID());
+        initContent();
+        ct.setHNS(hnsNull);
+        assertThrows(AnyMedicineSearchException.class, () -> {
+            ct.selectProduct(1);
+        });
     }
 
     @Test
     void enterMedicineGuidelinesTest() throws Exception {
+        String[] instruct = new String[] {"AFTERBREAKFAST", "10", "instructions1", "20", "30", "HOUR"};
+        ct.initRevision();
+        ct.searchForProducts("Analgesico");
+        ct.selectProduct(1);
+        ct.enterMedicineGuidelines(instruct);
 
+        medPresc.addLine(new ProductID("234567890123"), instruct);
+        assertEquals(ct.getePrescription(), medPresc);
     }
 
     @Test
     void enterTreatmentEndingDateTest() throws Exception {
+        Date end = new Date(2021-1900, Calendar.DECEMBER, 30);
+        String[] instruct = new String[] {"AFTERBREAKFAST", "10", "instructions1", "20", "30", "HOUR"};
 
+        ct.initRevision();
+        ct.searchForProducts("Analgesico");
+        ct.selectProduct(1);
+        ct.enterMedicineGuidelines(instruct);
+        ct.enterTreatmentEndingDate(end);
+
+        assertEquals(end, ct.getePrescription().getEndDate());
     }
 
     @Test
-    void sendePrescription() throws Exception {
+    void sendePrescriptionTest() throws Exception {
+        String[] instruct = new String[] {"AFTERBREAKFAST", "10", "instructions1", "20", "30", "HOUR"};
 
+        ct.initRevision();
+        ct.searchForProducts("Analgesico");
+        ct.selectProduct(1);
+        ct.enterMedicineGuidelines(instruct);
+        ct.enterTreatmentEndingDate(new Date(2021-1900, Calendar.DECEMBER, 30));
+        MedicalPrescription before = ct.getePrescription();
+        assertEquals(new DigitalSignature("Xavier".getBytes()) ,before.geteSign());
+
+        initTest();
+        ct.initRevision();
+        ct.searchForProducts("Analgesico");
+        ct.selectProduct(1);
+        ct.enterMedicineGuidelines(instruct);
+        ct.enterTreatmentEndingDate(new Date(2021-1900, Calendar.DECEMBER, 30));
+        ct.setHNS(hnsNull);
+        assertThrows(NotValidePrescription.class, () -> {
+            ct.sendePrescription();
+        });
     }
 
     private static class HealthNationalServiceDoble implements HealthNationalService {

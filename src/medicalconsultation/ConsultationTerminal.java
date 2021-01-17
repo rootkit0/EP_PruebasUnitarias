@@ -16,7 +16,7 @@ public class ConsultationTerminal {
     private HealthNationalService HNS;
     private ScheduledVisitAgenda SVA;
     private HealthCardID hcID;
-    private MedicalPrescription ePrescription;
+    private MedicalPrescription medPresc;
     private List<ProductSpecification> products;
     private ProductSpecification product;
     private DigitalSignature dSign;
@@ -40,14 +40,14 @@ public class ConsultationTerminal {
         this.hcID = SVA.getHealthCardID();
         if(this.hcID == null) throw new HealthCardException("Error obtaining HealthCardID");
         //Descargar eReceta
-        this.ePrescription = HNS.getePrescription(this.hcID);
-        if(this.ePrescription == null) throw new NotValidePrescriptionException("Error obtaining ePrescription");
+        this.medPresc = HNS.getePrescription(this.hcID);
+        if(this.medPresc == null) throw new NotValidePrescriptionException("Error obtaining ePrescription");
     }
 
     public void initPrescriptionEdition() throws AnyCurrentPrescriptionException, NotFinishedTreatmentException {
         Date today = new Date();
-        if(ePrescription.getEndDate().after(today)) throw new NotFinishedTreatmentException("Treatment still in progress");
-        if(ePrescription.getPrescDate().before(today)) throw new AnyCurrentPrescriptionException("Treatment still not started");
+        if(medPresc.getEndDate().after(today)) throw new NotFinishedTreatmentException("Treatment still in progress");
+        if(medPresc.getPrescDate().before(today)) throw new AnyCurrentPrescriptionException("Treatment still not started");
     }
 
     public void searchForProducts(String keyWord) throws AnyKeyWordMedicineException, ConnectException {
@@ -84,7 +84,7 @@ public class ConsultationTerminal {
             throw new AnySelectedMedicineException("Obtained productID is null");
         }
         try {
-            ePrescription.addLine(product.getUpcCode(), instruc);
+            medPresc.addLine(product.getUpcCode(), instruc);
         }
         catch(Exception e) {
             throw new IncorrectTakingGuidelinesException("Incomplete or wrong information on instruc");
@@ -95,26 +95,26 @@ public class ConsultationTerminal {
         if(date == null || date.before(new Date())) {
             throw new IncorrectEndingDateException("Null or expired date");
         }
-        ePrescription.setEndDate(date);
-        ePrescription.setPrescDate(new Date());
+        medPresc.setEndDate(date);
+        medPresc.setPrescDate(new Date());
     }
 
     public void sendePrescription() throws ConnectException, NotValidePrescription, eSignatureException, NotCompletedMedicalPrescription {
-        if(ePrescription == null) {
+        if(medPresc == null) {
             throw new NotValidePrescription("Null object, expected an ePrescription");
         }
         if(dSign == null) {
             throw new eSignatureException("Null object, expected doctor signature");
         }
-        ePrescription.seteSign(dSign);
-        ePrescription = HNS.sendePrescription(ePrescription);
+        medPresc.seteSign(dSign);
+        medPresc = HNS.sendePrescription(medPresc);
     }
 
     public void printePresc() throws PrintingException {
-        if(ePrescription == null) {
+        if(medPresc == null) {
             throw new PrintingException("Null object, expected an ePrescription");
         }
-        System.out.println(ePrescription.toString());
+        System.out.println(medPresc.toString());
     }
 
     //Getters and setters
@@ -131,7 +131,15 @@ public class ConsultationTerminal {
     }
 
     public MedicalPrescription getePrescription() {
-        return ePrescription;
+        return medPresc;
+    }
+
+    public ProductID getProdID() {
+        return this.product.getUpcCode();
+    }
+
+    public List<ProductSpecification> getProductsSpecs() {
+        return products;
     }
 
     public void setHNS(HealthNationalService HNS) {
@@ -147,6 +155,6 @@ public class ConsultationTerminal {
     }
 
     public void setePrescription(MedicalPrescription ePrescription) {
-        this.ePrescription = ePrescription;
+        this.medPresc = ePrescription;
     }
 }
