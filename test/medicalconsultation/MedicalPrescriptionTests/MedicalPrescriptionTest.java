@@ -63,12 +63,12 @@ public class MedicalPrescriptionTest implements MedicalConsultationMethodsTest {
             medPresc.addLine(prodID, wrongFormat);
         });
         //Empty values
-        String[] emptyValues = new String[] {"AFTERLUNCH", "", "", "", "", "DAY"};
+        String[] emptyValues = new String[] {"AFTERLUNCH", "", "", "", "", "HOUR"};
         assertThrows(IncorrectTakingGuidelinesException.class, () -> {
             medPresc.addLine(prodID, emptyValues);
         });
         //Wrong day moment
-        String[] wrongDayMoment = new String[] {"TEST", "10", "abc", "20", "30", "DAY"};
+        String[] wrongDayMoment = new String[] {"A", "10", "abc", "20", "30", "HOUR"};
         assertThrows(IncorrectTakingGuidelinesException.class, () -> {
             medPresc.addLine(prodID, wrongDayMoment);
         });
@@ -81,7 +81,7 @@ public class MedicalPrescriptionTest implements MedicalConsultationMethodsTest {
 
     @Test
     public void modifyLine() throws Exception {
-        ProductID prodID = new ProductID("234567890123");
+        ProductID prodID = new ProductID("123456789012");
         //Parameters to modify
         String[] toModify = new String[] {"", "", "modified_instructions", "", "", ""};
         //Expected result after the modify

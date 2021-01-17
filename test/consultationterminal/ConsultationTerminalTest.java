@@ -4,18 +4,17 @@ import data.DigitalSignature;
 import data.HealthCardID;
 import data.ProductID;
 import exceptions.*;
-import medicalconsultation.ConsultationTerminal;
-import medicalconsultation.MedicalPrescription;
-import medicalconsultation.ProductSpecification;
+import medicalconsultation.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import services.HealthNationalService;
 import services.ScheduledVisitAgenda;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ConsultationTerminalTest {
     static ConsultationTerminal ct;
@@ -24,7 +23,8 @@ public class ConsultationTerminalTest {
     static ScheduledVisitAgendaDoble sva;
     static ScheduledVisitAgendaDobleNull svaNull;
     static HealthCardID hcID;
-    static MedicalPrescription mp;
+    static DigitalSignature dSign;
+    static MedicalPrescription medPresc;
 
     @BeforeAll
     static void initContent() throws Exception {
@@ -33,14 +33,75 @@ public class ConsultationTerminalTest {
         hnsNull = new HealthNationalServiceDobleNull();
         sva = new ScheduledVisitAgendaDoble();
         svaNull = new ScheduledVisitAgendaDobleNull();
-        hcID = new HealthCardID("");
+        hcID = new HealthCardID("BBBBBBBBQR648597807024000012");
+        dSign = new DigitalSignature("Xavier".getBytes());
+
+        //Create medicalprescriptionlines
+        TakingGuideline tg1 = new TakingGuideline(DayMoment.AFTERBREAKFAST, 10, "instructions1", 20, 30, FqUnit.HOUR);
+        MedicalPrescriptionLine mpl1 = new MedicalPrescriptionLine(new ProductID("012345678901"), tg1);
+        TakingGuideline tg2 = new TakingGuideline(DayMoment.AFTERLUNCH, 40, "instructions2", 50, 60, FqUnit.DAY);
+        MedicalPrescriptionLine mpl2 = new MedicalPrescriptionLine(new ProductID("123456789012"), tg2);
+        //Create arraylist of presc lines and add them
+        ArrayList<MedicalPrescriptionLine> prescLines = new ArrayList<>();
+        prescLines.add(mpl1);
+        prescLines.add(mpl2);
+        //Create medical prescription
+        medPresc = new MedicalPrescription(100, new Date(), new Date(2021-1900, Calendar.DECEMBER, 25), hcID, dSign, prescLines);
     }
 
     @BeforeEach
-    static void initTest() throws Exception {
+    void initTest() throws Exception {
         ct = new ConsultationTerminal(new DigitalSignature("Xavier".getBytes()));
         ct.setHNS(hns);
         ct.setSVA(sva);
+    }
+
+    @Test
+    void initRevisionTest() throws Exception {
+        ct.initRevision();
+        assertEquals(hcID, ct.getHcID());
+        assertEquals(medPresc, ct.getePrescription());
+        //Test HNS
+        ct.setHNS(hnsNull);
+        assertThrows(NotValidePrescriptionException.class, () -> {
+            ct.initRevision();
+        });
+        initTest();
+        //Test SVA
+        ct.setSVA(svaNull);
+        assertThrows(HealthCardException.class, () -> {
+            ct.initRevision();
+        });
+    }
+
+    @Test
+    void initPrescriptionEditionTest() throws Exception {
+
+    }
+
+    @Test
+    void searchForProductsTest() throws Exception {
+
+    }
+
+    @Test
+    void selectProductTest() throws Exception {
+
+    }
+
+    @Test
+    void enterMedicineGuidelinesTest() throws Exception {
+
+    }
+
+    @Test
+    void enterTreatmentEndingDateTest() throws Exception {
+
+    }
+
+    @Test
+    void sendePrescription() throws Exception {
+
     }
 
     private static class HealthNationalServiceDoble implements HealthNationalService {
@@ -54,7 +115,7 @@ public class ConsultationTerminalTest {
 
         @Override
         public MedicalPrescription getePrescription(HealthCardID hcID) throws HealthCardException, NotValidePrescriptionException, ConnectException {
-            return mp;
+            return medPresc;
         }
 
         @Override
@@ -120,7 +181,6 @@ public class ConsultationTerminalTest {
     }
 
     private static class ScheduledVisitAgendaDobleNull implements ScheduledVisitAgenda {
-
         @Override
         public HealthCardID getHealthCardID() throws HealthCardException {
             return null;

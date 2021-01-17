@@ -112,8 +112,12 @@ public class HealthNationalServiceSample implements HealthNationalService {
     @Override
     public ProductSpecification getProductSpecific(int opt) throws AnyMedicineSearchException, ConnectException {
         try {
-            if (prodSpecs == null || prodSpecs.isEmpty()) throw new AnyMedicineSearchException("");
-            if (opt>=prodSpecs.size() || opt<0) throw new AnyMedicineSearchException("");
+            if (prodSpecs == null || prodSpecs.isEmpty()) {
+                throw new AnyMedicineSearchException("");
+            }
+            if (opt >= prodSpecs.size() || opt < 0) {
+                throw new AnyMedicineSearchException("");
+            }
             return prodSpecs.get(opt);
         } catch (AnyMedicineSearchException e){
             throw new AnyMedicineSearchException("");

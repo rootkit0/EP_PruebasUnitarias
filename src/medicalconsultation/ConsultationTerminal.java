@@ -35,7 +35,7 @@ public class ConsultationTerminal {
         this.dSign = dSign;
     }
 
-    public void initRevision() throws HealthCardException, NotValidePrescriptionException, ConnectException {
+    public void initRevision() throws HealthCardException, NotValidePrescriptionException, ConnectException, NullObjectException, WrongIdCodeFormat {
         //Recuperar identificacion paciente
         this.hcID = SVA.getHealthCardID();
         if(this.hcID == null) throw new HealthCardException("Error obtaining HealthCardID");
